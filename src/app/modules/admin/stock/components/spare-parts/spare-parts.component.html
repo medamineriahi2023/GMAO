@@ -1,0 +1,100 @@
+<div class="flex flex-col">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col">
+            <h2 class="text-2xl font-semibold tracking-tight">Spare Parts Inventory</h2>
+            <div class="font-medium tracking-tight text-secondary">Manage and track spare parts stock levels</div>
+        </div>
+        <div class="mt-4 sm:mt-0">
+            <button mat-flat-button color="primary">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2">Add Part</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <mat-form-field class="mt-6">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Type to filter" #input>
+    </mat-form-field>
+
+    <!-- Table -->
+    <div class="mt-4 overflow-x-auto">
+        <table mat-table [dataSource]="dataSource" matSort class="w-full bg-card">
+            <!-- Part Number Column -->
+            <ng-container matColumnDef="partNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Part Number</th>
+                <td mat-cell *matCellDef="let element">{{element.partNumber}}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            </ng-container>
+
+            <!-- Quantity Column -->
+            <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</th>
+                <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
+            </ng-container>
+
+            <!-- Supplier Column -->
+            <ng-container matColumnDef="supplier">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplier</th>
+                <td mat-cell *matCellDef="let element">{{element.supplier}}</td>
+            </ng-container>
+
+            <!-- Unit Price Column -->
+            <ng-container matColumnDef="unitPrice">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Price</th>
+                <td mat-cell *matCellDef="let element">{{element.unitPrice | currency}}</td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <td mat-cell *matCellDef="let element">
+                    <div [ngClass]="{
+                        'text-green-600': element.status === 'Available',
+                        'text-amber-600': element.status === 'Low Stock',
+                        'text-red-600': element.status === 'Out of Stock'
+                    }">
+                        {{element.status}}
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Last Inventory Date Column -->
+            <ng-container matColumnDef="lastInventoryDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Inventory</th>
+                <td mat-cell *matCellDef="let element">{{element.lastInventoryDate | date}}</td>
+            </ng-container>
+
+            <!-- Location Column -->
+            <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+                <td mat-cell *matCellDef="let element">{{element.location}}</td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button [matTooltip]="'Edit'" color="primary">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button [matTooltip]="'Delete'" color="warn">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of spare parts"></mat-paginator>
+    </div>
+</div>

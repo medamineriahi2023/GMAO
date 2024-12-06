@@ -1,0 +1,95 @@
+<div class="flex flex-col">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col">
+            <h2 class="text-2xl font-semibold tracking-tight">Asset List</h2>
+            <div class="font-medium tracking-tight text-secondary">View and manage all assets</div>
+        </div>
+        <div class="mt-4 sm:mt-0">
+            <button mat-flat-button color="primary">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2">Add Asset</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <mat-form-field class="mt-6">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Type to filter" #input>
+    </mat-form-field>
+
+    <!-- Table -->
+    <div class="mt-4 overflow-x-auto">
+        <table mat-table [dataSource]="dataSource" matSort class="w-full bg-card">
+            <!-- Code Column -->
+            <ng-container matColumnDef="code">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
+                <td mat-cell *matCellDef="let element">{{element.code}}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            </ng-container>
+
+            <!-- Family Column -->
+            <ng-container matColumnDef="family">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Family</th>
+                <td mat-cell *matCellDef="let element">{{element.family}}</td>
+            </ng-container>
+
+            <!-- Location Column -->
+            <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.location.building}} - {{element.location.room}}
+                </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <td mat-cell *matCellDef="let element">
+                    <div [ngClass]="{
+                        'text-green-600': element.status === 'Active',
+                        'text-amber-600': element.status === 'Under Maintenance',
+                        'text-red-600': element.status === 'Retired'
+                    }">
+                        {{element.status}}
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Last Maintenance Column -->
+            <ng-container matColumnDef="lastMaintenance">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Maintenance</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.maintenanceHistory[0]?.date | date}}
+                </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button [matTooltip]="'View Details'" color="primary">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button mat-icon-button [matTooltip]="'Edit'" color="primary">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button [matTooltip]="'Delete'" color="warn">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of assets"></mat-paginator>
+    </div>
+</div>

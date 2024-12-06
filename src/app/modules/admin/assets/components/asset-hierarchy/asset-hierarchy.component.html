@@ -1,0 +1,39 @@
+<div class="flex flex-col">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col">
+            <h2 class="text-2xl font-semibold tracking-tight">Asset Hierarchy</h2>
+            <div class="font-medium tracking-tight text-secondary">View assets in hierarchical structure</div>
+        </div>
+        <div class="mt-4 sm:mt-0">
+            <button mat-flat-button color="primary">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2">Add Location</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Tree -->
+    <div class="mt-8 bg-card rounded-lg p-6">
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+            <!-- Leaf node -->
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <mat-icon class="mr-2 text-hint" [svgIcon]="'heroicons_outline:cube'"></mat-icon>
+                <span>{{node.name}}</span>
+                <span class="ml-2 text-sm text-hint">({{node.type}})</span>
+            </mat-tree-node>
+            <!-- Expandable node -->
+            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                <button mat-icon-button matTreeNodeToggle>
+                    <mat-icon class="icon-size-5">
+                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                </button>
+                <mat-icon class="mr-2 text-hint" [svgIcon]="'heroicons_outline:building-office-2'"></mat-icon>
+                <span>{{node.name}}</span>
+                <span class="ml-2 text-sm text-hint">({{node.type}})</span>
+            </mat-tree-node>
+        </mat-tree>
+    </div>
+</div>

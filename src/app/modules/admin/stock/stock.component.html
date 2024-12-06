@@ -1,0 +1,44 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="flex flex-col">
+            <!-- Title -->
+            <div class="flex items-center">
+                <div class="flex-auto">
+                    <h2 class="text-3xl font-semibold tracking-tight">Stock Management</h2>
+                    <div class="font-medium tracking-tight text-secondary">
+                        Comprehensive inventory tracking and management system
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+                <ng-container *ngFor="let category of categories">
+                    <div 
+                        class="flex flex-col p-6 bg-card shadow rounded-lg cursor-pointer"
+                        [ngClass]="{'ring-2 ring-primary': selectedCategory === category.id}"
+                        (click)="setCategory(category.id)">
+                        <div class="flex items-center">
+                            <mat-icon 
+                                [svgIcon]="'heroicons_outline:' + category.icon"
+                                class="text-primary">
+                            </mat-icon>
+                            <div class="ml-4 font-medium">{{category.title}}</div>
+                        </div>
+                        <div class="mt-2 text-secondary text-sm">
+                            {{category.description}}
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+            <!-- Content -->
+            <div class="mt-8">
+                <spare-parts *ngIf="selectedCategory === 'spare-parts'"></spare-parts>
+                <consumables *ngIf="selectedCategory === 'consumables'"></consumables>
+                <raw-materials *ngIf="selectedCategory === 'raw-materials'"></raw-materials>
+                <tools-equipment *ngIf="selectedCategory === 'tools'"></tools-equipment>
+            </div>
+        </div>
+    </div>
+</div>

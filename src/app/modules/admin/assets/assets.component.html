@@ -1,0 +1,37 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="flex flex-col">
+            <!-- Title -->
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-3xl font-semibold tracking-tight">Asset Management</h2>
+                    <div class="font-medium tracking-tight text-secondary">
+                        Comprehensive asset tracking and maintenance management
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="flex items-center mt-8 space-x-4">
+                <ng-container *ngFor="let item of navigation">
+                    <a 
+                        [routerLink]="[item.link]"
+                        routerLinkActive="bg-primary text-on-primary"
+                        class="flex items-center px-6 py-3 rounded-full cursor-pointer hover:bg-hover"
+                    >
+                        <mat-icon 
+                            [svgIcon]="item.icon"
+                            class="mr-2 icon-size-5"
+                        ></mat-icon>
+                        <span>{{item.label}}</span>
+                    </a>
+                </ng-container>
+            </div>
+
+            <!-- Content -->
+            <div class="mt-8">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

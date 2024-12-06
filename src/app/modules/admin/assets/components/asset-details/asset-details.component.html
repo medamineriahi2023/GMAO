@@ -1,0 +1,97 @@
+<div class="flex flex-col">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col">
+            <div class="flex items-center">
+                <a 
+                    [routerLink]="['../']"
+                    class="mr-2 text-primary hover:underline"
+                >
+                    <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                </a>
+                <h2 class="text-2xl font-semibold tracking-tight">{{asset?.name}}</h2>
+            </div>
+            <div class="font-medium tracking-tight text-secondary">Asset Details</div>
+        </div>
+        <div class="mt-4 sm:mt-0">
+            <button mat-flat-button color="primary">
+                <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                <span class="ml-2">Edit Asset</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+        <!-- Basic Information -->
+        <div class="bg-card rounded-lg shadow p-6">
+            <h3 class="text-lg font-medium mb-4">Basic Information</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm font-medium text-secondary">Asset Code</label>
+                    <div>{{asset?.code}}</div>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-secondary">Family</label>
+                    <div>{{asset?.family}} - {{asset?.subFamily}}</div>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-secondary">Status</label>
+                    <div [ngClass]="{
+                        'text-green-600': asset?.status === 'Active',
+                        'text-amber-600': asset?.status === 'Under Maintenance',
+                        'text-red-600': asset?.status === 'Retired'
+                    }">
+                        {{asset?.status}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location -->
+        <div class="bg-card rounded-lg shadow p-6">
+            <h3 class="text-lg font-medium mb-4">Location</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm font-medium text-secondary">Site</label>
+                    <div>{{asset?.location?.site}}</div>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-secondary">Building</label>
+                    <div>{{asset?.location?.building}}</div>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-secondary">Floor</label>
+                    <div>{{asset?.location?.floor}}</div>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-secondary">Room</label>
+                    <div>{{asset?.location?.room}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Details -->
+        <div class="bg-card rounded-lg shadow p-6">
+            <h3 class="text-lg font-medium mb-4">Technical Details</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm font-medium text-secondary">Manufacturer</label>
+                    <div>{{asset?.technicalDetails?.manufacturer}}</div>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-secondary">Model</label>
+                    <div>{{asset?.technicalDetails?.model}}</div>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-secondary">Serial Number</label>
+                    <div>{{asset?.technicalDetails?.serialNumber}}</div>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-secondary">Installation Date</label>
+                    <div>{{asset?.technicalDetails?.installationDate | date}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
