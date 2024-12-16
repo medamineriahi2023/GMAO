@@ -14,12 +14,12 @@
             <!-- Navigation -->
             <div class="flex items-center mt-8 space-x-4">
                 <ng-container *ngFor="let item of navigation">
-                    <a 
+                    <a
                         [routerLink]="[item.link]"
                         routerLinkActive="bg-primary text-on-primary"
                         class="flex items-center px-6 py-3 rounded-full cursor-pointer hover:bg-hover"
                     >
-                        <mat-icon 
+                        <mat-icon
                             [svgIcon]="item.icon"
                             class="mr-2 icon-size-5"
                         ></mat-icon>
